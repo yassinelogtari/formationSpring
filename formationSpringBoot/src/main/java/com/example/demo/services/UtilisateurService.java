@@ -7,9 +7,14 @@ import com.example.demo.entities.Utilisateur;
 
 public interface UtilisateurService {
 
+	//méthodes CRUD basique
 	public List<Utilisateur> getAllUtilisateurs();
 	public Utilisateur findUtilisateurById(Long id);
 	public Utilisateur createUtilisateur(Utilisateur utilisateur);
 	public Utilisateur updateUtilisateur(Utilisateur utilisateur);
 	public void deleteUtilisateur(Long id);
+	
+	//méthodes un peu avancées
+	
+	public List<Utilisateur> findByFirstName(String firtsName);
 }
