@@ -1,5 +1,6 @@
 package com.example.demo.cotroller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Utilisateur;
+import com.example.demo.requests.FirstNameAndLastNameRequest;
 import com.example.demo.services.UtilisateurService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +45,7 @@ public class UtilisateurController {
 		}
 	}
 	
+	//findbyFirstName
 	@GetMapping	("/getByFirstName/{firstName}")
 	public ResponseEntity<List<Utilisateur>> findUtilisateursByFirstName(@PathVariable String firstName) {
 		
@@ -55,7 +58,72 @@ public class UtilisateurController {
 		}
 	}
 	
+	//findUtilisateursByFirstNameOrLastName
+	@GetMapping	("/getByFirstNameOrLastName/{firstName}/{lastName}")
+	public ResponseEntity<List<Utilisateur>> findUtilisateursByFirstNameOrLastName(@PathVariable String firstName,@PathVariable String lastName) {
+		
+		List<Utilisateur> utilisateurs= utilisateurservice.findByFirstNameOrLastName(firstName, lastName);
+		if(utilisateurs.isEmpty()) {
+			return new ResponseEntity<List<Utilisateur>>(HttpStatus.NO_CONTENT);
+		}
+		else {
+			return new ResponseEntity<List<Utilisateur>>(utilisateurs,HttpStatus.OK);
+		}
+	}
 	
+	//findUtilisateursByFirstNameOrLastName with @requestbody
+	@GetMapping	("/getByFirstNameOrLastNameWithRb")
+	public ResponseEntity<List<Utilisateur>> findUtilisateursByFirstNameOrLastNameWithRb(@RequestBody FirstNameAndLastNameRequest firstNameAndLastNameRequest) {
+		
+		List<Utilisateur> utilisateurs= utilisateurservice.findByFirstNameOrLastName(firstNameAndLastNameRequest.getFirstName(),firstNameAndLastNameRequest.getLastName());
+		if(utilisateurs.isEmpty()) {
+			return new ResponseEntity<List<Utilisateur>>(HttpStatus.NO_CONTENT);
+		}
+		else {
+			return new ResponseEntity<List<Utilisateur>>(utilisateurs,HttpStatus.OK);
+		}
+	}
+	
+	
+	//findUtilisateursByFirstNameOrLastName with @requestbody with jpql
+		@GetMapping	("/getByFirstNameOrLastNameWithJpql")
+		public ResponseEntity<List<Utilisateur>> findUtilisateursByFirstNameOrLastNameWithRbJpql(@RequestBody FirstNameAndLastNameRequest firstNameAndLastNameRequest) {
+			
+			List<Utilisateur> utilisateurs= utilisateurservice.findByFirstNameAndLastNameWithJpql(firstNameAndLastNameRequest.getFirstName(),firstNameAndLastNameRequest.getLastName());
+			if(utilisateurs.isEmpty()) {
+				return new ResponseEntity<List<Utilisateur>>(HttpStatus.NO_CONTENT);
+			}
+			else {
+				return new ResponseEntity<List<Utilisateur>>(utilisateurs,HttpStatus.OK);
+			}
+		}
+		
+	//	findUtilisateursByAges with @requestbody 
+		@GetMapping	("/getByAge")
+		public ResponseEntity<List<Utilisateur>> findUtilisateursAge(@RequestBody List<Integer> ages) {
+			
+			List<Utilisateur> utilisateurs= utilisateurservice.findByAgeIn(ages);
+			if(utilisateurs.isEmpty()) {
+				return new ResponseEntity<List<Utilisateur>>(HttpStatus.NO_CONTENT);
+			}
+			else {
+				return new ResponseEntity<List<Utilisateur>>(utilisateurs,HttpStatus.OK);
+			}
+		}
+	
+//		findUtilisateursByStarterDateAndAvtiveFalse
+			@GetMapping	("/getByStarterDate/{date}")
+			public ResponseEntity<List<Utilisateur>> findUtilisateursByStarterDateAndAvtiveFalse(@PathVariable	 Date date) {
+				
+				List<Utilisateur> utilisateurs= utilisateurservice.findByStarterDateAndActiveFalse(date);
+				if(utilisateurs.isEmpty()) {
+					return new ResponseEntity<List<Utilisateur>>(HttpStatus.NO_CONTENT);
+				}
+				else {
+					return new ResponseEntity<List<Utilisateur>>(utilisateurs,HttpStatus.OK);
+				}
+			}	
+		
 	@PostMapping("/addUser")
 	public Utilisateur addUtilisateur(@RequestBody Utilisateur utilisateur){
 		return utilisateurservice.createUtilisateur(utilisateur);

@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +65,29 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public List<Utilisateur> findByFirstName(String firtsName) {
 		
 		return utilisateurRepository.findByFirstName(firtsName);
+	}
+
+	@Override
+	public List<Utilisateur> findByFirstNameOrLastName(String firstName, String lastName) {
+		return utilisateurRepository.findByFirstNameOrLastName(firstName, lastName);
+	}
+
+	@Override
+	public List<Utilisateur> findByFirstNameAndLastNameWithJpql(String firstName, String lastName) {
+		
+		return utilisateurRepository.findByFirstNameAndLastNameWithJpql(firstName, lastName);
+	}
+
+	@Override
+	public List<Utilisateur> findByAgeIn(List<Integer> ages) {
+		
+		return utilisateurRepository.findByAgeIn(ages);
+	}
+
+	@Override
+	public List<Utilisateur> findByStarterDateAndActiveFalse(Date date) {
+		
+		return utilisateurRepository.findByStarterDateAndActiveFalse(date);
 	}
 
 }
