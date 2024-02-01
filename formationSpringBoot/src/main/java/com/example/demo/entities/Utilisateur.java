@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 import org.hibernate.annotations.Table;
 
@@ -20,6 +21,16 @@ public class Utilisateur implements Serializable {
 	private LocalDate starterDate;
 	private int age;
 	private Boolean active;
+	
+	@OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE} )
+	private Contact contact;
+	
+	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
+	private Set <Role> roles ;
+	
+	@OneToMany (cascade = {CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE},fetch = FetchType.EAGER)
+	private Set<Adresse> adresses;
+	
 	public Long getId() {
 		return id;
 	}
@@ -68,6 +79,26 @@ public class Utilisateur implements Serializable {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
+	
+	public Contact getContact() {
+		return contact;
+	}
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	public Set<Adresse> getAdresses() {
+		return adresses;
+	}
+	public void setAdresses(Set<Adresse> adresses) {
+		this.adresses = adresses;
+	}
+	
 	
 	
 

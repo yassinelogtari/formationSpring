@@ -90,4 +90,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateurRepository.findByStarterDateAndActiveFalse(date);
 	}
 
+	@Override
+	public List<Utilisateur> findByRoleTitre(String titre) {
+		
+		return utilisateurRepository.findByRolesTitre(titre);
+	}
+
 }

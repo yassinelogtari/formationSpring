@@ -20,4 +20,6 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long>{
 	
 	public List<Utilisateur> findByAgeIn(List<Integer> ages);
 	public List<Utilisateur> findByStarterDateAndActiveFalse(Date date);
+	
+	public List<Utilisateur> findByRolesTitre(String titre);
 }

@@ -124,6 +124,18 @@ public class UtilisateurController {
 				}
 			}	
 		
+//			findUtilisateursByStarterDateAndAvtiveFalse
+				@GetMapping	("/getByRole/{titre}")
+				public ResponseEntity<List<Utilisateur>> findUtilisateursByRole(@PathVariable String titre) {
+					
+					List<Utilisateur> utilisateurs= utilisateurservice.findByRoleTitre(titre);
+					if(utilisateurs.isEmpty()) {
+						return new ResponseEntity<List<Utilisateur>>(HttpStatus.NO_CONTENT);
+					}
+					else {
+						return new ResponseEntity<List<Utilisateur>>(utilisateurs,HttpStatus.OK);
+					}
+				}	
 	@PostMapping("/addUser")
 	public Utilisateur addUtilisateur(@RequestBody Utilisateur utilisateur){
 		return utilisateurservice.createUtilisateur(utilisateur);

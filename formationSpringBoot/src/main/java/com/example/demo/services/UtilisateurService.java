@@ -22,4 +22,5 @@ public interface UtilisateurService {
 	public List<Utilisateur> findByFirstNameAndLastNameWithJpql(String firstName,String lastName);
 	public List<Utilisateur> findByAgeIn(List<Integer> ages);
 	public List<Utilisateur> findByStarterDateAndActiveFalse(Date date);
+	public List<Utilisateur> findByRoleTitre(String titre);
 }
